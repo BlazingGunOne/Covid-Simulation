@@ -1,11 +1,12 @@
+import random
 import networkx as nx
 import matplotlib.pyplot as plt
 import pylab
 pylab.ion()
 
 G = nx.Graph()
-random_pos = nx.random_layout(G, seed=1)
-pos = nx.spring_layout(G, pos=random_pos)
+# random_pos = nx.random_layout(G, seed=1)
+# pos = nx.spring_layout(G, pos=random_pos)
 
 def initialize():
     G.add_node("a", state = "S")
@@ -45,9 +46,29 @@ def spread():
     return fig
 n = 5
 pylab.show()
-for i in range(n):
-    fig = spread()
-    fig.canvas.draw()
-    pylab.draw()
-    plt.pause(2)
-    pylab.close(fig)
+# for i in range(n):
+#     fig = spread()
+#     fig.canvas.draw()
+#     pylab.draw()
+#     plt.pause(2)
+#     pylab.close(fig)
+
+H = nx.Graph()
+
+def add_cluster(network, size, deg):
+    h = nx.Graph()
+    node_list = list(range(len(network.nodes()), len(network.nodes()) + size))
+    h.add_nodes_from(node_list, state = 'S')
+    for u in h.nodes():
+        for v in h.nodes():
+            randno = random.uniform(0, 1)
+            p = deg/len(h.nodes())
+            if randno <= p and u < v:
+                h.add_edge(u, v, weight = round(random.uniform(0.5, 1), 2))
+    return nx.disjoint_union(network, h)
+H = add_cluster(H, 5, 3)
+H = add_cluster(H, 5, 2)
+H = add_cluster(H, 2, 2)
+print((H.nodes(data = True)))
+print("\n")
+print((H.edges(data = True)))
