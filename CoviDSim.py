@@ -14,17 +14,6 @@ print("\n")
 print((H.edges(data = True)))
 
 
-
-
-
-# TO DOS:
-# Check everything
-# Add immunity, viral load and edge weight distribution...Done
-# Implement Spread based on immunity, viral load and edge weight...Done
-# Go from I -> R...Done
-# Sort Animation...Done
-# Reduce speed of animation....Done ig
-
 def update(num, layout, G, ax):
     ax.clear()
     color = []
@@ -51,7 +40,7 @@ def animate(G):
 
     layout = nx.spring_layout(G)
 
-    ani = animation.FuncAnimation(fig, update, interval=500, fargs=(layout, G, ax))
+    ani = animation.FuncAnimation(fig, update, interval=750, fargs=(layout, G, ax))
 
     plt.show(1)
 
